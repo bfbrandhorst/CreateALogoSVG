@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const { Circle, Square, Triangle } = require('./lib/shapes');
-const SVG = require('./lib/svg')
+const SVG = require('./lib/svg');
+const fs = require('fs');
 
 
 inquirer.prompt(
@@ -36,5 +37,24 @@ inquirer.prompt(
 )
     .then((answers) => {
         console.log(answers);
+        let shapeChoice;
+        switch (answers.shape) {
+            case "circle":
+                shapeChoice = new Circle()
+                break;
+            case "triangle":
+                shapeChoice = new Triangle()
+                break;
+            case "square":
+                shapeChoice = new Square()
+                break;
+        }
+        shapeChoice.setColor(answers.shapeColor)
+        const finalLogo = new SVG()
+        finalLogo.setShape(shapeChoice)
+        finalLogo.setText(answers.characters, answers.textColor)
+        fs.writeFile('myLogo.svg', finalLogo.render(), (err) => {
+            err ? console.error(err) : console.log('your super cool logo has been generated')
+        })
 
     })
