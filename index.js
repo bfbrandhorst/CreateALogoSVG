@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const { Circle, Square, Triangle } = require('./lib/shapes');
+const SVG = require('./lib/svg')
 
 
 inquirer.prompt(
@@ -32,3 +34,7 @@ inquirer.prompt(
         }
     ]
 )
+    .then((answers) => {
+        console.log(answers);
+
+    })
